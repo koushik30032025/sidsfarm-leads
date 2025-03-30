@@ -103,10 +103,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, mobile, latitude, longitude })
       });
-      // Since we're using no-cors, we can't directly check response.text()
-      document.getElementById("message").innerText = "Thank you! Your details have been submitted.";
-    });
-    document.getElementById("leadForm").addEventListener("submit", async (e) => {
+          document.getElementById("leadForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const submitButton = e.target.querySelector('button[type="submit"]');
   submitButton.disabled = true; // Disable button to prevent double-clicks
@@ -118,6 +115,10 @@
   // Rest of your code (location fetch, form submission)...
 
   submitButton.disabled = false; // Re-enable button after processing
+      // Since we're using no-cors, we can't directly check response.text()
+      document.getElementById("message").innerText = "Thank you! Your details have been submitted.";
+    });
+
 });
   </script>
 </body>
