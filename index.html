@@ -109,3 +109,16 @@
   </script>
 </body>
 </html>
+document.getElementById("leadForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const submitButton = e.target.querySelector('button[type="submit"]');
+  submitButton.disabled = true; // Disable button to prevent double-clicks
+
+  // Clean the mobile number input (remove non-digits)
+  const mobileInput = document.getElementById("mobile");
+  mobileInput.value = mobileInput.value.replace(/\D/g, '').trim();
+
+  // Rest of your code (location fetch, form submission)...
+
+  submitButton.disabled = false; // Re-enable button after processing
+});
