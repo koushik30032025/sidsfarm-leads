@@ -1,1 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sid’s Farm - Free Milk Sample</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #d4edda, #f8f9fa);
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    h1 {
+      color: #2e7d32;
+      font-size: 32px;
+      margin: 0 0 10px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    p {
+      color: #495057;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+    form {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      border: 4px solid #4CAF50;
+      position: relative;
+      z-index: 1;
+    }
+    label {
+      display: block;
+      text-align: left;
+      margin: 12px 0 6px;
+      color: #343a40;
+      font-weight: 600;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+      box-sizing: border-box;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    input:focus {
+      border-color: #2e7d32;
+      box-shadow: 0 0 8px rgba(46,125,50,0.4);
+      outline: none;
+    }
+    .optional::after {
+      content: " (Optional)";
+      font-weight: 400;
+      color: #6c757d;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      background: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #3d8b40;
+    }
+    .logo {
+      max-width: 180px;
+      margin-bottom: 20px;
+      filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+    }
+    .cow {
+      max-width: 70px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      opacity: 0.9;
+    }
+    .success-box {
+      display: none !important;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      border: 3px solid #4CAF50;
+      z-index: 10;
+    }
+    .success-box.visible {
+      display: block !important;
+    }
+    .success-tick {
+      font-size: 70px;
+      color: #4CAF50;
+      margin-bottom: 15px;
+      animation: pop 0.5s ease-out;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); }
+      80% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .success-text {
+      font-size: 24px;
+      color: #343a40;
+      font-weight: 500;
+    }
+    .error-box {
+      display: none !important;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #dc3545;
+      color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      font-size: 20px;
+      z-index: 10;
+    }
+    .error-box.visible {
+      display: block !important;
+    }
+    .bg-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-overlay" id="overlay"></div>
+  <img src="https://raw.githubusercontent.com/koushik30032025/sidsfarm-leads/main/milk.png" alt="Cow Graphic" class="cow">
+  <img src="https://raw.githubusercontent.com/koushik30032025/sidsfarm-leads/main/sidsfarm-logo.png" alt="Sid’s Farm Logo" class="logo">
+  <h1>Welcome to Sid’s Farm!</h1>
+  <p>Drop your details for a free milk sample.</p>
+  <form id="leadForm">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" required>
+    <label for="mobile">Mobile (10 digits) *</label>
+    <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+    <label for="community">Community Name *</label>
+    <input type="text" id="community" name="community" required>
+    <label for="dob" class="optional">Date of Birth</label>
+    <input type="date" id="dob" name="dob">
+    <input type="hidden" id="latitude" name="latitude">
+    <input type="hidden" id="longitude" name="longitude">
+    <button type="submit">Submit Now</button>
+  </form>
+  <div id="successBox" class="success-box">
+    <div class="success-tick">✓</div>
+    <div class="success-text">Thanks for Joining Sid’s Farm!<br>Check Back Soon!</div>
+  </div>
+  <div id="errorBox" class="error-box"></div>
+  <script>
+    const form = document.getElementById("leadForm");
+    const successBox = document.getElementById("successBox");
+    const errorBox = document.getElementById("errorBox");
+    const overlay = document.getElementById("overlay");
 
+    console.log("Elements loaded:", { form, successBox, errorBox, overlay });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const community = document.getElementById("community").value.trim();
+      const dob = document.getElementById("dob").value || "N/A";
+      let latitude = "N/A", longitude = "N/A";
+
+      console.log("Form data:", { name, mobile, community, dob });
+
+      if (navigator.geolocation) {
+        try {
+          const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
+          latitude = pos.coords.latitude.toFixed(6);
+          longitude = pos.coords.longitude.toFixed(6);
+        } catch (err) {
+          console.log("Location error:", err.message);
+        }
+      }
+
+      document.getElementById("latitude").value = latitude;
+      document.getElementById("longitude").value = longitude;
+
+      console.log("Sending data:", { name, mobile, community, dob, latitude, longitude });
+
+      try {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbyJSBY1Z8RqKxOoPR8yHEY3QtsdTrcyC8DglbvKd3hBbb_9-9-EPQE1rAnDASy0GLcF/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, mobile, community, dob, latitude, longitude })
+        });
+
+        console.log("Fetch response status:", res.status);
+        const result = await res.text();
+        console.log("Fetch result:", result);
+
+        if (result === "Success") {
+          console.log("Success response received");
+          form.style.display = "none";
+          overlay.style.display = "block";
+          successBox.classList.add("visible");
+          setTimeout(() => window.close(), 4000);
+        } else {
+          console.log("Error response received:", result);
+          overlay.style.display = "block";
+          errorBox.innerText = result === "Duplicate" ? "That mobile’s already in, try another!" : "Something went wrong, please try again!";
+          errorBox.classList.add("visible");
+          setTimeout(() => {
+            errorBox.classList.remove("visible");
+            overlay.style.display = "none";
+          }, 2500);
+        }
+      } catch (err) {
+        console.error("Fetch error:", err.message);
+        overlay.style.display = "block";
+        errorBox.innerText = "Network error, please check your connection!";
+        errorBox.classList.add("visible");
+        setTimeout(() => {
+          errorBox.classList.remove("visible");
+          overlay.style.display = "none";
+        }, 2500);
+      }
+    });
+  </script>
+</body>
+</html>
