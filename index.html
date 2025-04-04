@@ -105,24 +105,27 @@
         latitude: "N/A",
         longitude: "N/A"
       };
+      console.log("Sending data:", formData); // Debug: Log data being sent
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbyJSBY1Z8RqKxOoPR8yHEY3QtsdTrcyC8DglbvKd3hBbb_9-9-EPQE1rAnDASy0GLcF/exec", {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbz64Vk4hs3hLeRP5jF3d4Hx4HapFCz5AOrCHYfkw0Dw9HSjT52uYci14lH8wNeIeEEp/exec", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData)
         });
         const result = await response.text();
+        console.log("Server response:", result); // Debug: Log server response
         document.getElementById("loading").style.display = "none";
         if (result === "Success") {
           document.getElementById("leadForm").style.display = "none";
           document.getElementById("message").innerText = "THANK YOU";
           document.getElementById("message").style.display = "block";
         } else {
-          alert("Error: " + result);
+          alert("Error from server: " + result);
         }
       } catch (error) {
+        console.error("Fetch error:", error); // Debug: Log fetch errors
         document.getElementById("loading").style.display = "none";
-        alert("Submission failed. Please try again.");
+        alert("Submission failed: " + error.message + ". Please check your connection or try again.");
       }
     });
   </script>
