@@ -110,10 +110,10 @@
       const dob = document.getElementById("dob").value || "N/A";
 
       console.log("Form data:", { name, mobile, community, dob });
-      console.log("Sending to URL:", "https://script.google.com/macros/s/AKfycbzrsfn8nmZkKoZRpreHaz2IbGwLmNZvvlQ3CF9on3QdKISKN5bKqSmWR1Zfkjo5czYu/exec");
+      console.log("Sending to URL:", "https://script.google.com/macros/s/AKfycbz8zCBFPgb6Z1-Oab_d2H_VcZqJk195wiaKhakYF00nbZauexwKj7AA7wtlj4VyS289/exec");
 
       try {
-        const res = await fetch("https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbzrsfn8nmZkKoZRpreHaz2IbGwLmNZvvlQ3CF9on3QdKISKN5bKqSmWR1Zfkjo5czYu/exec", {
+        const res = await fetch("https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbz8zCBFPgb6Z1-Oab_d2H_VcZqJk195wiaKhakYF00nbZauexwKj7AA7wtlj4VyS289/exec", {
   method: "POST",
   headers: { "Content-Type": "application/json", "Origin": "https://koushik30032025.github.io" },
   body: JSON.stringify({ name, mobile, community, dob })
